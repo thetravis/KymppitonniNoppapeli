@@ -4,11 +4,13 @@
   </h1>
 </div>
 
-
+<div style="position:relative; margin-top: 2px;  margin-bottom: 2px;">
+  <label>Nimi:</label><input type="text" [(ngModel)]="userName" style="width: 225px; margin-top: 2px;  margin-bottom: 2px;">
+</div>
 <div style="position:relative">
   <div style="position: relative; height:500px; width: 300px; border: solid 1px black; overflow-y: auto;">
     <div *ngFor="let message of chatMessages">
-      {{message.name}}: {{message.message}}
+     <label> {{message.name}}: </label> {{message.message}}
     </div>
   </div>
 
