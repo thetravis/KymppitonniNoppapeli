@@ -1,0 +1,35 @@
+Peliä varten tarvitaan kuusi noppaa.
+
+Ensin heitetään kaikki kuusi noppaa. Joka heitolla pitää jättää syrjään vähintään yksi noppa, ja heittelyä saa jatkaa niin pitkään, kuin pystyy jättämään noppia syrjään tahi kunnes kantti ei enää kestä. Kun kaikki kuusi noppaa ovat syrjässä (eli kaikilla nopilla on saatu pisteitä), saa heittää taas kaikki kuusi uudestaan. Jos ja kun jollain heitolla ei saa mitään syrjään jätettävää, menettää kaikki sillä heittovuorolla keräämänsä pisteet.
+
+Pisteitä saa seuraavista luvuista ja yhdistelmistä (kaikki yhdistelmät saatava yhdellä heitolla):
+
+5 = 50p
+5 5 5 = 500p
+1 = 100p
+1 1 1 = 1000p
+2 2 2 = 200p
+3 3 3 = 300p
+4 4 4 = 400p
+6 6 6 = 600p
+
+Yksi sama luku lisää tuplaa pistemäärän:
+5 5 5 5 = 1000p
+5 5 5 5 5 = 2000p
+5 5 5 5 5 5 = 4000p
+1 1 1 1 = 2000p
+1 1 1 1 1 = 4000p
+1 1 1 1 1 1 = 8000p
+
+suora eli 1 2 3 4 5 6 = 1000p
+kolme paria, esim. 2 2 4 4 5 5 = 2000p
+neljä kakkosta 2 2 2 2 = 0p. Miinusta ei tule, mutta vuoro siirtyy seuraavalle pelaajalle. 
+
+Porsaanreikäsääntö: yhdellä heitolla neliluku pari, esim. 3 3 3 3 5 5. Sopimuskysymys, onko kyseessä kolme paria (2000p) vaiko neljä kolmosta ja kaksi vitosta (yht. 700p). Kannattaa päättää pelin alussa.
+
+Breikkisääntö: Mikäli saa yhden heittovuoron aikana kokoon yli 2000p, saa breikin. Breikillä on merkitystä siinä vaiheessa, jos joku toinen pelaaja saa kokoon 10 000p ennen breikin haltijaa. Tällöin breikin haltija saa samalla hetkellä 1000p ekstraa, joka lisätään hänen sen hetkiseen pistemääräänsä. Breikin haltija voi siis voittaa vielä tässä vaiheessa pelin, vaikka olisikin häviöllä. Mikäli joku toinen pelaaja heittää pelin kuluessa suuremman pistemäärän yhdellä kierroksella (esim. breikki A:lla on 2300p, mutta B saakin 2600p), breikki siirtyy hänelle. Breikki voi olla vain yhdellä pelaajalla kerrallaan. Jos pelaaja heittää samansuuruisen breikin kuin edellinen, breikit kumoavat toisensa, eikä kukaan saa sitä haltuunsa.
+
+Ensimmäisenä 10 000 pistettä kasaan saanut voittaa, mutta kierros pelataan kuitenkin loppuun = tasoittavat vuorot.
+
+Niemon lisäykset: 
+"Toi nollaussääntö ollaan tehty meiän peleis, et jos et saa yhtää pistenoppaa tai pisteitä oikeuttavaa komboa ekalla heitolla -> nollaus. Tosta kolmen parin säännöstä en mee vannomaan. Joskus sitä käytetty, mut ei aina. Mut iha validi sääntö minu mielest. Meiä peleis suora o ollu 2000p."
