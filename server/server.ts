@@ -2,6 +2,10 @@ import * as errorHandler from "errorhandler";
 
 import app from "./app";
 
+import * as socketIO from 'socket.io';
+
+import { SocketIOServer } from './socket.io.server'
+
 /**
  * Error Handler. Provides full stack - remove for production
  */
@@ -18,5 +22,7 @@ const server = app.listen(app.get("port"), () => {
   );
   console.log("  Press CTRL-C to stop\n");
 });
+
+let socketIOServer: SocketIOServer = new SocketIOServer(server);
 
 export default server;
