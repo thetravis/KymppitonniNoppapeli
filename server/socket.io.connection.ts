@@ -81,7 +81,7 @@ export class SocketIOConnection {
     this.socket.emit('userNameMessage', {userNameMessage: unm});
     // Add username to list and remove the old one
     this.addUserName(msg.userNameMessage.newUserName);
-    this.removeUserName(msg.userNameMessage.originalUserName)
+    this.removeUserName(msg.userNameMessage.originalUserName);
   }
 
   addUserName(userName) {
@@ -94,8 +94,8 @@ export class SocketIOConnection {
       return;
     }
     for ( let i = 0; i < this.userNames.length; i++) {
-      if(this.userNames[i] == "userName") {
-        this.userNames.slice(i,1)
+      if(this.userNames[i] == userName) {
+        this.userNames.splice(i,1)
       }
     }
   }

@@ -69,10 +69,8 @@ export class ChatComponent implements OnInit {
       this.userNameValid = userNameMessage.userNameValid;
     } else {
       this.userNameValid = userNameMessage.userNameValid; 
-      alert('Sattui pieni hups: Viallinen nimi.');
       this.userName = userNameMessage.originalUserName;
       this.userNameValid = true;
-
     }
   }
 
