@@ -6,10 +6,12 @@ import { FormsModule }   from '@angular/forms';
 import { AppComponent } from './app.component';
 
 import { SocketIOService } from './socket.io.service';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
