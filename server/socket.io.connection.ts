@@ -25,6 +25,12 @@ export class SocketIOConnection {
 
     this.socket.on('userNameMessage', (msg) => { this.onUserNameMessage(msg) });
 
+
+    socket.on("disconnect", (msg) => {
+      console.log("A user disconnected. Socket: " + socket.id);
+      this.removeUserName(this.userName);
+    });
+
   }
 
   onChatMessageHandler(msg: { chatMessage: ChatMessage }): void {
@@ -86,6 +92,7 @@ export class SocketIOConnection {
 
   addUserName(userName) {
     this.userNames.push(userName);
+    this.sendUserNameList();
   }
 
   removeUserName(userName) {
@@ -98,6 +105,12 @@ export class SocketIOConnection {
         this.userNames.splice(i,1)
       }
     }
+    this.sendUserNameList();
+  }
+
+  // Method to broadcast username list
+  sendUserNameList() {
+    this.io.emit('userNameListMessage', {userNameList: this.userNames});
   }
 
 }

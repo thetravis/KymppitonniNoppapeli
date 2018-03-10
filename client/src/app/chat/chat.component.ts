@@ -15,6 +15,7 @@ export class ChatComponent implements OnInit {
   public messageTextField: string  = "";
   public userName: string  = "Risujemmaaja"
   public validatedUserName: string = "Risujemmaaja"
+  public userNames: string[] = ["Risujemmaaja"];
   public userNameValid: boolean = false;
   public chatMessages: Array<ChatMessage>;
 
@@ -22,7 +23,9 @@ export class ChatComponent implements OnInit {
     this.chatMessages = new Array<ChatMessage>();
     this.socketIOService.onChatMessageHandler = this.onChatMessageHandler.bind(this); // remember to bind this or else shitstorms etc.
     this.socketIOService.onUserNameMessageHandler = this.onUserNameMessageHandler.bind(this); // remember to bind this or else shitstorms etc.
+    this.socketIOService.onUserNameListMessageHandler = this.onUserNameListMessageHandler.bind(this) // forgot to bind this...  
   }
+
 
   ngOnInit() {
   }
@@ -72,6 +75,15 @@ export class ChatComponent implements OnInit {
       this.userName = userNameMessage.originalUserName;
       this.userNameValid = true;
     }
+  }
+
+  onUserNameListMessageHandler(msg: {userNameList: string[]}) {
+    console.log(msg);
+    this.userNames = msg.userNameList;
+  }
+
+  getUserNames(): string[] {
+    return this.userNames;
   }
 
 }

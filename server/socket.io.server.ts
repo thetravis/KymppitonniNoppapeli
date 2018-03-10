@@ -29,15 +29,12 @@ export class SocketIOServer {
       socketConnection.chatMessageHistoryLength = this.chatMessageHistoryLength;
       socketConnection.userNames = this.userNames;
 
-      console.log("Perkele");
       console.log("A user connected. Socket: " + socket.id);
+
+
+      socketConnection.sendUserNameList();
       // Send chat history to client
       socketConnection.sendChatHistory();
-
-      socket.on("disconnect", (msg) => {
-        console.log("A user disconnected. Socket: " + socket.id);
-      });
-
     });
   }
 

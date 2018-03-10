@@ -21,6 +21,9 @@ export class SocketIOService {
   /** Username change handler provided by the ChatComponent */
   public onUserNameMessageHandler = null;
 
+  /** Username list handler provided by the App/ChatComponent */
+  public onUserNameListMessageHandler = null;
+
   /**
    * Constructor tells the service what to do on different event 
    * emitted by the server/socket. 
@@ -46,6 +49,14 @@ export class SocketIOService {
     this.socket.on("errorMessage", (data) => {
       if (!(this.onErrorMessageHandler == null)) {
         this.onErrorMessageHandler(data);
+      }
+    });
+
+    // Handler for user name list
+    this.socket.on("userNameListMessage", (data) => {
+      if (!(this.onUserNameListMessageHandler == null)) {
+        console.log(data);
+        this.onUserNameListMessageHandler(data);
       }
     });
 
