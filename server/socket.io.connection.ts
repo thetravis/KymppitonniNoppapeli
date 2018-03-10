@@ -34,10 +34,13 @@ export class SocketIOConnection {
   }
 
   onChatMessageHandler(msg: { chatMessage: ChatMessage }): void {
+    if (msg.chatMessage.message.trim() == "") {
+      return;
+    }
     if (msg.chatMessage.name != this.userName) {
       this.socket.emit('errorMessage', { errorMessage: 'Käyttäjätunnuksen validointi epäonnitui' });
     } else {
-      this.chatMessageHistory.push(msg.chatMessage); // Save message to 
+      this.chatMessageHistory.push(msg.chatMessage); // Save message to message history
       this.io.emit('chatMessage', { chatMessage: msg.chatMessage }) // broadcast that shit to everyone ::D
     }
   }
