@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ChatMessage } from '../../../../shared/chat.message';
+import { UserNameMessage } from '../../../../shared/username.message';
+
 
 import { SocketIOService} from '../socket.io.service';
 
@@ -19,6 +21,7 @@ export class ChatComponent implements OnInit {
   constructor(private socketIOService: SocketIOService) {
     this.chatMessages = new Array<ChatMessage>();
     this.socketIOService.onChatMessageHandler = this.onChatMessageHandler.bind(this); // remember to bind this or else shitstorms etc.
+    this.socketIOService.onUserNameMessageHandler = this.onUserNameMessageHandler.bind(this); // remember to bind this or else shitstorms etc.
   }
 
   ngOnInit() {
@@ -41,7 +44,7 @@ export class ChatComponent implements OnInit {
   }
 
   sendChatMessageToServer(message: ChatMessage): void {
-    this.socketIOService.sendChatMessageToServer(message);
+    this.socketIOService.sendChatMessage(message);
   }
 
   onChatMessageHandler(msg: {chatMessage: ChatMessage}) {
@@ -50,23 +53,24 @@ export class ChatComponent implements OnInit {
   }
 
   onChangeUserName() {
-    let msg= {
+    let msg: UserNameMessage = {
       newUserName: this.userName, 
-      userNameValid: true,
+      userNameValid: true, // TODO: Do some validation on client side also?
       originalUserName: this.validatedUserName
     }
-    this.onUserNameChangedHandler(msg);
+    this.socketIOService.sendUserNameMessage(msg);
   }
   
-  onUserNameChangedHandler(msg) {
-    if(msg.userNameValid) {
-      this.userName = msg.newUserName;
-      this.validatedUserName = msg.originalUserName;
-      this.userNameValid = msg.userNameValid;
+  onUserNameMessageHandler(msg: {userNameMessage: UserNameMessage} ) {
+    let userNameMessage = msg.userNameMessage;
+    if(userNameMessage.userNameValid) {
+      this.userName = userNameMessage.newUserName;
+      this.validatedUserName = userNameMessage.newUserName;
+      this.userNameValid = userNameMessage.userNameValid;
     } else {
-      this.userNameValid = msg.userNameValid; 
+      this.userNameValid = userNameMessage.userNameValid; 
       alert('Sattui pieni hups: Viallinen nimi.');
-      this.userName = msg.originalUserName;
+      this.userName = userNameMessage.originalUserName;
       this.userNameValid = true;
 
     }
