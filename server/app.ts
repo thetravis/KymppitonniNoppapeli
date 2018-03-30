@@ -20,5 +20,8 @@ app.use(
   express.static(path.join(__dirname, "../client/"), { maxAge: 31557600000 })
 );
 
+app.use(
+  express.static(path.join(__dirname, "../client/assets"), { maxAge: 31557600000 })
+);
 
 export default app;

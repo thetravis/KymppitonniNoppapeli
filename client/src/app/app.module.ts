@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 
 import { SocketIOService } from './socket.io.service';
 import { ChatComponent } from './chat/chat.component';
+import { MiikkaComponent } from './miikka/miikka.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChatComponent
+    ChatComponent,
+    MiikkaComponent
   ],
   imports: [
     BrowserModule,

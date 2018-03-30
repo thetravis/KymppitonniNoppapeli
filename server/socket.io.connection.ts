@@ -7,12 +7,9 @@ import { UserNameMessage } from '../shared/username.message';
 export class SocketIOConnection {
   private io: SocketIO.Server;
   private socket: SocketIO.Socket;
-
   public chatMessageHistory: Array<ChatMessage>;
-  public chatMessageHistoryLength = 3;
-
+  public chatMessageHistoryLength = 100;
   public userNames: Array<String>;
-
   public userName: string = "Risujemmaaja";
 
   constructor(io: SocketIO.Server, socket: SocketIO.Socket) {
