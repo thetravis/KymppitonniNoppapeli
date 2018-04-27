@@ -9,7 +9,6 @@ import { UserNameMessage } from '../../../shared/username.message';
  * SocketIO service that connects to the server. 
  */
 
-@Injectable()
 export class SocketIOService {
 
   /** The socket that connects to the server. */
@@ -24,6 +23,8 @@ export class SocketIOService {
   /** Username list handler provided by the App/ChatComponent */
   public onUserNameListMessageHandler = null;
 
+  /** Image list handler provided by app component */
+  public onImageListHandler = null;
   /**
    * Constructor tells the service what to do on different event 
    * emitted by the server/socket. 
@@ -55,24 +56,34 @@ export class SocketIOService {
     // Handler for user name list
     this.socket.on("userNameListMessage", (data) => {
       if (!(this.onUserNameListMessageHandler == null)) {
-        console.log(data);
         this.onUserNameListMessageHandler(data);
       }
     });
 
+
+    // Handler for user name list
+    this.socket.on("imageList", (data) => {
+      if (!(this.onImageListHandler == null)) {
+        this.onImageListHandler(data);
+      }
+    });
   }
 
-  sendChatMessage(chatMessage: ChatMessage ): void {
+  public sendChatMessage(chatMessage: ChatMessage ): void {
     this.socket.emit("chatMessage", { chatMessage: chatMessage });
   }
 
-  sendUserNameMessage(userNameMessage: UserNameMessage): void {
+  public sendUserNameMessage(userNameMessage: UserNameMessage): void {
     this.socket.emit("userNameMessage", { userNameMessage: userNameMessage });
   }
 
-  onErrorMessageHandler(data) {
+  private onErrorMessageHandler(data) {
     console.log(data);
     alert(data.errorMessage);
+  }
+
+  public listImages() {
+    this.socket.emit("listImages");
   }
 
 }

@@ -43,6 +43,7 @@ yarn-error.log
 Thumbs.
 
 # Non-public
-/client/src/assets/miikka.jpg
+# Make only miikka.jpg public
 /client/src/assets/miikka/*
+!/client/src/assets/miikka/miikka.jpg
 

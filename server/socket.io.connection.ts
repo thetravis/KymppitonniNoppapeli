@@ -3,6 +3,11 @@ import * as SocketIO from "socket.io";
 import { ChatMessage } from '../shared/chat.message';
 import { UserNameMessage } from '../shared/username.message';
 
+import * as fs from 'fs';
+import * as path from 'path';
+import { pathMatch } from "tough-cookie";
+
+
 
 export class SocketIOConnection {
   private io: SocketIO.Server;
@@ -11,6 +16,8 @@ export class SocketIOConnection {
   public chatMessageHistoryLength = 100;
   public userNames: Array<String>;
   public userName: string = "Risujemmaaja";
+
+  public assetsFolderPath = path.join(__dirname, '../client/assets')
 
   constructor(io: SocketIO.Server, socket: SocketIO.Socket) {
     this.io = io;
@@ -21,6 +28,9 @@ export class SocketIOConnection {
     this.socket.on('chatMessage', (msg) => { this.onChatMessageHandler(msg) });
 
     this.socket.on('userNameMessage', (msg) => { this.onUserNameMessage(msg) });
+
+    this.socket.on('listImages', (msg) => { this.listImages() });
+    
 
 
     socket.on("disconnect", (msg) => {
@@ -112,5 +122,51 @@ export class SocketIOConnection {
   sendUserNameList() {
     this.io.emit('userNameListMessage', {userNameList: this.userNames});
   }
+
+  listImages() {
+    this.listFilesOfType(path.join(this.assetsFolderPath, 'miikka'),  /\.jpg$|\.png$\.JPG$|\.PNG$/).then(
+      (imageList) => {
+      this.io.emit('imageList', {imageList: imageList})
+      }
+    ).catch((error) => this.io.emit('errorMessage', { errorMessage: 'Virhe kuvien listauksessa: ' + error }));
+  }
+
+/**
+   * Function to list files of given type
+   * @param fileType File type to be listed
+   * @param callback What to do with the list.
+   */
+
+  async listFilesOfType(pathToFiles: string, fileType: string | RegExp): Promise<string[]> {
+    console.log(pathToFiles);
+    let filesOfType: string[] = new Array<string>();
+    return new Promise<string[]>((resolve, reject) => {
+      if (fs.existsSync(pathToFiles)) {
+        fs.readdir(pathToFiles, (err, files: string[]) => {
+          if (err) {
+            console.log('Error reading directory ');
+            console.log(err);
+            reject();
+          }
+          files.forEach(file => {
+            if (typeof fileType == "string") {
+              if (path.extname(file) == fileType) {
+                filesOfType.push(file);
+              }
+            }
+            if (fileType instanceof RegExp) {
+              if (file.match(fileType)) {
+                filesOfType.push(file);
+              }
+            }
+          });
+          resolve(filesOfType);
+        });
+      } else {
+        resolve(filesOfType);
+      }
+    });
+  }
+
 
 }

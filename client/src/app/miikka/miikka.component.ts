@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { SocketIOService } from '../socket.io.service';
+import { SimpleChange } from '@angular/core/src/change_detection/change_detection_util';
+import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+// import { setInterval } from 'timers';
 
 
 @Component({
@@ -7,12 +10,14 @@ import { SocketIOService } from '../socket.io.service';
   templateUrl: './miikka.component.html',
   styleUrls: ['./miikka.component.css']
 })
-export class MiikkaComponent implements OnInit {
+export class MiikkaComponent implements OnInit, OnChanges {
 
-  public assetsPath = "./assets/";
+  /** List from server. Default to miikka.jpg */
+  @Input() miikkaImages: string[] = ["miikka.jpg"];
+  
+  public assetsPath = "./assets/miikka/";
   public miikkaImage: string =  "miikka.jpg";
   public miikkaImagePath: string = this.assetsPath + this.miikkaImage;
-  public miikkaImages: string[] = ["miikka.jpg"];
 
   public miikkaVisible: boolean = true;
   public toggleMiikkaButtonText: string = "Piilota Miikka";
@@ -23,10 +28,17 @@ export class MiikkaComponent implements OnInit {
 
   ngOnInit() {
     this.miikkaImagePath = this.assetsPath + this.miikkaImage;
+    setInterval( () => { this.nextMiikkaImage() } , 30000);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if ( changes.miikkaImages != null) {
+      this.onMiikkaImageList(changes.miikkaImages.currentValue)
+    }
   }
 
   public onMiikkaImageList(miikkaImages: string[]) {
-
+    this.miikkaImages = miikkaImages;
   }
 
   public onToggleMiikka() {
@@ -39,5 +51,17 @@ export class MiikkaComponent implements OnInit {
       
     }
   }
+
+  private nextMiikkaImage(): void {
+    let miikkaImageNumber = this.miikkaImages.indexOf(this.miikkaImage);
+    if ( miikkaImageNumber < 0) {
+      console.log("Bad image file name")
+      miikkaImageNumber = 0;
+    }
+    miikkaImageNumber = (miikkaImageNumber + 1) % this.miikkaImages.length;
+    this.miikkaImage = this.miikkaImages[miikkaImageNumber];
+    this.miikkaImagePath = this.assetsPath + this.miikkaImage;
+  }
+  
 
 }

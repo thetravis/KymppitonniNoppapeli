@@ -1,4 +1,4 @@
 <div>
   <button (click)="onToggleMiikka()" style="margin: 5px;"> {{toggleMiikkaButtonText}}  </button> <br />
-  <img *ngIf="miikkaVisible" [src]="miikkaImagePath" class="miikka-image" style="margin: 5px;" />
+  <img *ngIf="miikkaVisible" [src]="miikkaImagePath" (click)="nextMiikkaImage()" class="miikka-image" style="margin: 5px;" />
 <div>
