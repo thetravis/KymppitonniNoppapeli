@@ -20,7 +20,7 @@ export class SocketIOServer {
     this.chatMessageHistory = new Array<ChatMessage>();
     this.chatMessageHistoryLength = 100;
 
-    this.userNames = ["Risujemmaaja"]; // Default username
+    this.userNames = ["Anonymous"]; // Default username
     
     this.io.on("connection", (socket) => { // Use => to bind this
       let socketConnection: SocketIOConnection = new SocketIOConnection(this.io, socket);

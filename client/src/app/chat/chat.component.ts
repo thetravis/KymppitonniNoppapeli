@@ -13,9 +13,9 @@ import { SocketIOService} from '../socket.io.service';
 })
 export class ChatComponent implements OnInit {
   public messageTextField: string  = "";
-  public userName: string  = "Risujemmaaja"
-  public validatedUserName: string = "Risujemmaaja"
-  public userNames: string[] = ["Risujemmaaja"];
+  public userName: string  = "Anonymous"
+  public validatedUserName: string = "Anonymous"
+  public userNames: string[] = ["Anonymous"];
   public userNameValid: boolean = false;
   public chatMessages: Array<ChatMessage>;
 
@@ -28,16 +28,6 @@ export class ChatComponent implements OnInit {
 
 
   ngOnInit() {
-  }
-
-  onSendDontPlayJesus(): void {
-    let message: ChatMessage = {name: this.userName, message: "ÄLÄ LEIKI JEESUSTA!" }
-    this.sendChatMessageToServer(message);
-  }
-
-  onSendDickItchyThing(): void {
-    let message: ChatMessage = {name: this.userName, message: "KYRVÄNSYYLÄ!" }
-    this.sendChatMessageToServer(message);
   }
 
   onSendChatMessage(): void {

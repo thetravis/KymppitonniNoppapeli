@@ -15,7 +15,7 @@ export class SocketIOConnection {
   public chatMessageHistory: Array<ChatMessage>;
   public chatMessageHistoryLength = 100;
   public userNames: Array<String>;
-  public userName: string = "Risujemmaaja";
+  public userName: string = "Anonymous";
 
   public assetsFolderPath = path.join(__dirname, '../client/assets')
 
@@ -23,7 +23,7 @@ export class SocketIOConnection {
     this.io = io;
     this.socket = socket;
 
-    this.userName = "Risujemmaaja";
+    this.userName = "Anonymous";
 
     this.socket.on('chatMessage', (msg) => { this.onChatMessageHandler(msg) });
 
@@ -107,7 +107,7 @@ export class SocketIOConnection {
 
   removeUserName(userName) {
     // Keep the legends
-    if(userName == "Risujemmaaja") {
+    if(userName == "Anonymous") {
       return;
     }
     for ( let i = 0; i < this.userNames.length; i++) {
